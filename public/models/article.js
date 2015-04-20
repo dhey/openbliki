@@ -1,0 +1,5 @@
+function Article(attrs)
+{
+    markdown: ""
+}
+

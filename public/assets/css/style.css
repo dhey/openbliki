@@ -1,0 +1,21 @@
+.banner-custom
+{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 40px;
+    text-align: center;
+}
+
+.navbar-custom
+{
+    font-family: 'Ubuntu', sans-serif;
+    font-size: 30px;
+}
+
+.jumbotron-custom
+{
+    background: -webkit-linear-gradient(black, gray);
+    background: -o-linear-gradient(black, gray);
+    background: -moz-linear-gradient(black, gray);
+    background: linear-gradient(black, gray);
+    color: white;
+}
