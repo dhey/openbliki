@@ -1,5 +1,5 @@
 /*global angular, $location, marked  */
-angular.module('mainCtrl', ['articleService', 'ngSanitize', 'readMore'])
+angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 
 .controller('mainController', function(ArticleFactory, $sce, $rootScope, $location, Auth) {
     "use strict";
