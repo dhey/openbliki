@@ -41,23 +41,11 @@ mongoose.connect('mongodb://localhost:27017/openBliki', function (err, res)
 
     else
     {
-        console.log('Connected to Mongodb');
+        console.log('Connected to Mongodb.');
     }
 });
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
-
-// var db = mongoose.connection;
-// db.on('error', console.error.bind(console, 'connection error:'));
-// db.once('open', function (callback) {
-//   // yay!
-// });
-
-// var mongodb = require('mongodb');
-// var uri = 'mongodb://dhey:malvingi@ds061158.mongolab.com:61158/openbliki';
-// mongodb.MongoClient.connect(uri, function (err, db) {
-//     if (err) {console.log(err); }
-// });
 
 // Set static files location used for requests that our front end will make:
 app.use(express.static(__dirname + '/public'));
