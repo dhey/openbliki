@@ -7,7 +7,6 @@ var app = angular.module('userApp', [
 	'userCtrl',
 	'userService',
     'composeCtrl',
-    'yaru22.md',
     'ui.router',
     'PostsCtrl',
     'articleService',
