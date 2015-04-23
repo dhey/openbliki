@@ -42,7 +42,7 @@ gulp.task('jsonlintPackageJSON', function(){
 // Task jsonlintBowerJSON will check that the bower.json file is well formed:
 gulp.task('jsonlintBowerJSON', function(){
     "use strict";
-    gulp.src('./public/bower.json')
+    gulp.src('./bower.json')
     .pipe(jsonlint())
     .pipe(jsonlint.report('verbose'))
     .on('error', handleError);
@@ -53,8 +53,7 @@ gulp.task('jslint', function()
 {
     "use strict";
     return gulp.src(['gulpfile.js', 'server.js', './app/**/*.js', 
-        './public/*.js', './public/controllers/**/*.js', 
-        './public/services/**/*.js', './test/**/*.js'])
+        './public/app/**/*.js'])
 
         // Pass your directives as an object:
         .pipe(jslint(
