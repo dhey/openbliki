@@ -1,4 +1,4 @@
-/*global angular, alert */
+/*global angular, alert, Article */
 angular.module('PostsCtrl', ['articleService'])
 .controller('PostsCtrl', 
 
@@ -77,8 +77,13 @@ angular.module('PostsCtrl', ['articleService'])
                 payload;
             article.markdown = $scope.editedArticle.split('\n');
             payload = angular.toJson(article, 2);
-            $http.post('/api/article', payload).success(function(){/*success callback*/});
+            
+            $http.post('/api/article', payload).success(function()
+            {
+                console.log('Aritcle created successfully!');
+            });
+
             $location.path('/');
-        }
+        };
 
     });

@@ -1,4 +1,4 @@
-/*global angular, $location, marked  */
+/*global angular, $location, markdown  */
 angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 
 .controller('mainController', function(ArticleFactory, $sce, $rootScope, $location, Auth) {
@@ -12,13 +12,13 @@ angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 
 	ArticleFactory.all().success(function(data)
 	{
-		var	markdown_content = '';
+		var	markdown_content = '', outerLoop, articleArray, innerLoop;
 
-		for (var outerLoop = 0; outerLoop < data.length; outerLoop++)
+		for (outerLoop = 0; outerLoop < data.length; outerLoop+=1)
 		{
-			var articleArray = data[outerLoop].markdown;
+			articleArray = data[outerLoop].markdown;
 
-			for (var innerLoop = 0; innerLoop < articleArray.length; innerLoop++)
+			for (innerLoop = 0; innerLoop < articleArray.length; innerLoop+=1)
 			{
 				markdown_content = markdown_content + articleArray[innerLoop] + '\n';
 			}
@@ -75,11 +75,14 @@ angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 })
 
  .filter('markdown', function() {
-      return function(text) {
-          if (typeof text == "undefined") {
+    "use strict";
+      return function(text) 
+      {
+          if (text === "undefined") 
+          {
               return "";
           }
+          
           return markdown.toHTML(String(text));
-      }
+      };
   });
-;

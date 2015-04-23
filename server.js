@@ -34,6 +34,8 @@ app.use(morgan('dev'));
 // mongoose.connect = ('mongodb://dhey:malvingi@ds061158.mongolab.com:61158/openbliki', function (err, res)
 mongoose.connect('mongodb://localhost:27017/openBliki', function (err, res)
 {
+    "use strict";
+
     if (err)
     {
         console.log('Error connecting to Mongodb: ' + err);

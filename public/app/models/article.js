@@ -1,5 +1,7 @@
+/*global markdown, angular, alert, Article */
 function Article(attrs)
 {
-    markdown: ""
+    "use strict";
+    var markdown = "";
 }
 

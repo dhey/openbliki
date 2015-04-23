@@ -1,6 +1,8 @@
+/*global angular, alert, Article */
 angular.module('userCtrl', ['userService'])
 
 .controller('userController', function(User) {
+    "use strict";
 
 	var vm = this;
 
@@ -41,6 +43,7 @@ angular.module('userCtrl', ['userService'])
 
 // controller applied to user creation page
 .controller('userCreateController', function(User) {
+    "use strict";
 	
 	var vm = this;
 
@@ -67,6 +70,7 @@ angular.module('userCtrl', ['userService'])
 
 // controller applied to user edit page
 .controller('userEditController', function($routeParams, User) {
+    "use strict";
 
 	var vm = this;
 
