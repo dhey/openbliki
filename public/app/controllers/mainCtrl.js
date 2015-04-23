@@ -69,7 +69,7 @@ angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 		Auth.logout();
 		vm.user = '';
 		
-		$location.path('/login');
+		$location.path('/');
 	};
 
 })
