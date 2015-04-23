@@ -6,7 +6,6 @@ var app = angular.module('userApp', [
 	'mainCtrl',
 	'userCtrl',
 	'userService',
-    'composeCtrl',
     'ui.router',
     'PostsCtrl',
     'articleService',
