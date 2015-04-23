@@ -65,7 +65,7 @@ app.get('*', function (req, res)
     "use strict";
     res.header("Content-Type",  "text/html; charset=UTF-8");
     res.header("Content-Encoding", "compress");
-    res.sendFile(path.join(__dirname + '/public/views/index.html'));
+    res.sendFile(path.join(__dirname + '/public/app/views/index.html'));
 });
 
 // Start the server:
