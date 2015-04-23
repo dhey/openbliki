@@ -1,6 +1,7 @@
+/*global angular */
 angular.module('articleService', [])
-
 .factory('ArticleFactory', function($http) {
+    "use strict";
 
     // Create the object:
     var articleFactory = {};

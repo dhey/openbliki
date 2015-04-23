@@ -1,7 +1,12 @@
-/*global markdown, angular, alert, Article */
-function Article(attrs)
+/*global Article:true */
+var Article = function()
 {
     "use strict";
-    var markdown = "";
-}
+    this.markdown = '';
+};
 
+Article.prototype.getMarkdown = function()
+{
+    "use strict";
+    return this.markdown;
+};
