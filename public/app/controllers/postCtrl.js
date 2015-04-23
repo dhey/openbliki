@@ -2,7 +2,7 @@
 angular.module('PostsCtrl', ['articleService'])
 .controller('PostsCtrl', 
 
-    function(ArticleFactory, $scope, $stateParams, posts, $http)
+    function(ArticleFactory, $scope, $stateParams, posts, $location, $http)
     {
         "use strict";
 
@@ -48,7 +48,6 @@ angular.module('PostsCtrl', ['articleService'])
         {
             if (!$scope.title || $scope.title === '')
             {
-                alert("Here we are!");
                 return;
             }
 
@@ -63,7 +62,6 @@ angular.module('PostsCtrl', ['articleService'])
                 ]
             });
 
-            alert("Now here we are!");
             $scope.title = '';
             $scope.link = '';
         };
@@ -80,7 +78,7 @@ angular.module('PostsCtrl', ['articleService'])
             article.markdown = $scope.editedArticle.split('\n');
             payload = angular.toJson(article, 2);
             $http.post('/api/article', payload).success(function(){/*success callback*/});
+            $location.path('/');
         }
 
-    }
-    );
+    });
