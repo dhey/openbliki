@@ -54,18 +54,23 @@
 
 <!-- NAVBAR -->
 <header>
+<!-- 
     <div class="jumbotron jumbotron-custom">
         <h1 class='banner-custom'>donhey.io</h1>
     </div>
-    <div class="container">
+ -->
+     <div class="container">
+        <ul class="nav navbar-nav navbar-left navbar-custom">
+            <li><a class="navbar-brand navbar-custom" href="/">donhey.io</a></li>
+        </ul>
         <ul class="nav navbar-nav navbar-right navbar-custom">
-            <li><a class="navbar-brand navbar-custom" href="/">home</a></li>
             <li ng-if="main.loggedIn"><a href="/compose">compose</a></li>
             <li ng-if="main.loggedIn"><a href="/users">users</a></li>
 			<li ng-if="!main.loggedIn"><a href="/login">login</a></li>
 			<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">logout</a></li>
         </ul>
     </div>
+    <hr/>
 </header>
 
 <main class="container">
