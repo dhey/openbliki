@@ -40,7 +40,7 @@ module.exports = function(app, express)
 	{
 		console.log("Retrieving all articles...");
 
-		Article.find(function(err, articles)
+		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
 		{
 			if (err)
 			{
