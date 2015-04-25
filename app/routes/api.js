@@ -15,7 +15,8 @@ module.exports = function(app, express)
 		console.log('A request to create a new article was received.');
 		console.log(req.body);
 		var article = new Article();
-		article.markdown = req.body.markdown;	
+		article.markdown = req.body.markdown;
+		article.title = req.body.markdown[0];
 
 		article.save(function(err) 
 		{
@@ -40,7 +41,7 @@ module.exports = function(app, express)
 	{
 		console.log("Retrieving all articles...");
 
-		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
+		Article.find({}).sort({_id: 'desc'}).limit(1).exec(function(err, articles)
 		{
 			if (err)
 			{
