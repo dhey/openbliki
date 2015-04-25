@@ -7,6 +7,7 @@
 
 .navbar-custom
 {
+    color: white;    
     font-family: 'Ubuntu', sans-serif;
     font-size: 25px;
     height: 25px;
@@ -19,6 +20,14 @@
     background: -moz-linear-gradient(black, gray);
     background: linear-gradient(black, gray);
     color: white;
+}
+
+header
+{
+    background: -webkit-linear-gradient(black, gray);
+    background: -o-linear-gradient(black, gray);
+    background: -moz-linear-gradient(black, gray);
+    background: linear-gradient(black, gray);
 }
 
 p

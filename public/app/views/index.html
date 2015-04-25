@@ -64,10 +64,18 @@
             <li><a class="navbar-brand navbar-custom" href="/">donhey.io</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right navbar-custom">
-            <li ng-if="main.loggedIn"><a href="/compose">compose</a></li>
-            <li ng-if="main.loggedIn"><a href="/users">users</a></li>
-			<li ng-if="!main.loggedIn"><a href="/login">login</a></li>
-			<li ng-if="main.loggedIn"><a href="#" ng-click="main.doLogout()">logout</a></li>
+            <li ng-if="main.loggedIn">
+                <a class="navbar-brand navbar-custom"href="/compose">compose</a>
+            </li>
+            <li ng-if="main.loggedIn">
+                <a class="navbar-brand navbar-custom"href="/users">users</a>
+            </li>
+			<li ng-if="!main.loggedIn">
+                <a class="navbar-brand navbar-custom"href="/login">login</a>
+            </li>
+			<li ng-if="main.loggedIn">
+                <a class="navbar-brand navbar-custom"href="#" ng-click="main.doLogout()">logout</a>
+            </li>
         </ul>
     </div>
     <hr/>
