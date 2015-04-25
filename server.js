@@ -32,22 +32,54 @@ app.use(morgan('dev'));
 // Connect to the database:
 // mongoose.connect = ('mongodb://dhey:malvingi@ds055689.mongolab.com:55689/tryagain', function (err, res)
 // mongoose.connect = ('mongodb://dhey:malvingi@ds061158.mongolab.com:61158/openbliki', function (err, res)
-mongoose.connect('mongodb://localhost:27017/openBliki', function (err, res)
-{
-    "use strict";
+// mongoose.connect('mongodb://localhost:27017/openBliki', function (err, res)
+// {
+//     "use strict";
 
-    if (err)
-    {
-        console.log('Error connecting to Mongodb: ' + err);
-    }
+//     if (err)
+//     {
+//         console.log('Error connecting to Mongodb: ' + err);
+//     }
 
-    else
-    {
-        console.log('Connected to Mongodb.');
-    }
-});
+//     else
+//     {
+//         console.log('Connected to Mongodb.');
+//     }
+// });
+
+dbURI = 'mongodb://localhost:27017/openBliki';
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
+
+var db = mongoose.connection;
+
+db.on('connecting', function() {
+    console.log('connecting to MongoDB...');
+});
+
+db.on('error', function(error) {
+    console.error('Error in MongoDb connection: ' + error);
+    mongoose.disconnect();
+});
+
+db.on('connected', function() {
+    console.log('MongoDB connected!');
+});
+
+db.once('open', function() {
+    console.log('MongoDB connection opened!');
+});
+
+db.on('reconnected', function () {
+    console.log('MongoDB reconnected!');
+});
+
+db.on('disconnected', function() {
+    console.log('MongoDB disconnected!');
+    mongoose.connect(dbURI, {server:{auto_reconnect:true}});
+});
+
+mongoose.connect(dbURI, {server:{auto_reconnect:true}});
 
 // Set static files location used for requests that our front end will make:
 app.use(express.static(__dirname + '/public'));
