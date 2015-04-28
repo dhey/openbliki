@@ -8,7 +8,9 @@ angular.module('articleService', [])
 
     // Get a single article:
     articleFactory.get = function(id) {
-        return $http.get('/api/article/' + id);
+        var returnValue = $http.get('/api/article/' + id);
+        console.log('articleService got ' + returnValue + ' for ID ' + id);
+        return returnValue;
     };
 
     // Get all articles:

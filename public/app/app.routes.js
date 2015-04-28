@@ -24,11 +24,23 @@ angular.module('app.routes', ['ngRoute'])
 			controllerAs: 'compose'
 		})
 
+		.when('/titles', {
+			templateUrl: 'app/views/pages/titles.html',
+			controller: 'TitlesController',
+			controllerAs: 'titlesController'
+		})
+
+		.when('/article/:article_id', {
+			templateUrl: 'app/views/pages/article.html',
+			controller: 'ArticleController',
+			controllerAs: 'articleController'
+		})
+
 		// show all users
 		.when('/users', {
 			templateUrl: 'app/views/pages/users/all.html',
-			controller: 'userController',
-			controllerAs: 'user'
+            controller: 'userController',
+            controllerAs: 'user'
 		})
 
 		// form to create a new user

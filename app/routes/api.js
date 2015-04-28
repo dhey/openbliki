@@ -39,19 +39,74 @@ module.exports = function(app, express)
 
 	apiRouter.get('/article', function(req, res)
 	{
-		console.log("Retrieving all articles...");
+		console.log("Retrieving the latest article...");
 
-		Article.find({}).sort({_id: 'desc'}).limit(1).exec(function(err, articles)
+		Article.find({}).sort({_id: 'desc'}).limit(1).exec(function(err, article)
 		{
 			if (err)
 			{
 				return res.send(err);
 			}
 
-			console.log(articles);
+			console.log(article);
 
 			// Return the articles:
-			res.json(articles);
+			res.json(article);
+		});
+	});
+
+	apiRouter.route('/article/:article_id').delete(function(req, res)
+	{
+ 		var articleID = req.params.article_id;
+		console.log('Deleting article with ID ' + articleID + '...');
+
+		Article.remove(
+		{
+			_id: articleID
+		}, function(err, user) 
+		{
+			if (err)
+			{
+				return res.send(err);
+			}
+
+			res.json({ message: 'Successfully deleted.' });
+		});
+	});
+
+	apiRouter.route('/article/:article_id').get(function(req, res)
+	{
+ 		var articleID = req.params.article_id;
+
+		Article.find(
+		{
+			_id: articleID
+		},
+
+		function(err, article) 
+		{
+			if (err)
+			{
+				return res.send(err);
+			}
+
+			res.json(article);
+		});
+	});
+
+	apiRouter.get('/titles', function(req, res)
+	{
+		console.log("Retrieving all titles...");
+
+		Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
+		{
+			if (err)
+			{
+				return res.send(err);
+			}
+
+			// Return the articles:
+			res.json(titles);
 		});
 	});
 

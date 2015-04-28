@@ -42,11 +42,14 @@
 	<script src="app/controllers/mainCtrl.js"></script>
 	<script src="app/controllers/userCtrl.js"></script>
 	<script src="app/controllers/postCtrl.js"></script>
+    <script src="app/controllers/TitlesController.js"></script>
+    <script src="app/controllers/ArticleController.js"></script>
 
 	<!-- services -->
 	<script src="app/services/authService.js"></script>
 	<script src="app/services/userService.js"></script>
 	<script src="app/services/articleService.js"></script>
+    <script src="app/services/titlesService.js"></script>
 
 
 </head>
@@ -54,29 +57,13 @@
 
 <!-- NAVBAR -->
 <header>
-<!-- 
-    <div class="jumbotron jumbotron-custom">
-        <h1 class='banner-custom'>donhey.io</h1>
-    </div>
- -->
      <div class="container">
-        <ul class="nav navbar-nav navbar-left navbar-custom">
-            <li><a class="navbar-brand navbar-custom" href="/">donhey.io</a></li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right navbar-custom">
-            <li ng-if="main.loggedIn">
-                <a class="navbar-brand navbar-custom"href="/compose">compose</a>
-            </li>
-            <li ng-if="main.loggedIn">
-                <a class="navbar-brand navbar-custom"href="/users">users</a>
-            </li>
-			<li ng-if="!main.loggedIn">
-                <a class="navbar-brand navbar-custom"href="/login">login</a>
-            </li>
-			<li ng-if="main.loggedIn">
-                <a class="navbar-brand navbar-custom"href="#" ng-click="main.doLogout()">logout</a>
-            </li>
-        </ul>
+        <a class="navbar-brand navbar-custom" href="/">donhey.io</a>
+        <a class="navbar-brand navbar-custom"href="/titles">titles</a>
+        <a ng-if="main.loggedIn" class="navbar-brand navbar-custom"href="/compose">compose</a>
+        <a ng-if="main.loggedIn"class="navbar-brand navbar-custom"href="/users">users</a>
+        <a ng-if="!main.loggedIn" class="navbar-brand navbar-custom"href="/login">login</a>
+        <a ng-if="main.loggedIn"class="navbar-brand navbar-custom"href="#" ng-click="main.doLogout()">logout</a>
     </div>
     <hr/>
 </header>

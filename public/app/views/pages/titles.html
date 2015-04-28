@@ -1,0 +1,9 @@
+<h1>Titles</h1>
+
+<ul>
+    <li ng-repeat="title in titlesController.titles">
+        <a href="/article/{{title._id}}">{{ title.title }}</a>
+        <a ng-if="main.loggedIn">(edit)</a>
+        <a ng-if="main.loggedIn">(delete)</a>
+    </li>
+</ul>

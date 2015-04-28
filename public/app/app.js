@@ -8,6 +8,9 @@ var app = angular.module('userApp', [
 	'userService',
     'ui.router',
     'PostsCtrl',
+    'TitlesController',
+    'titlesService',
+    'ArticleController',
     'articleService',
     'ngSanitize'
 	])
