@@ -78,12 +78,25 @@ angular.module('PostsCtrl', ['articleService'])
             article.markdown = $scope.editedArticle.split('\n');
             payload = angular.toJson(article, 2);
             
-            $http.post('/api/article', payload).success(function()
+            $http.post('/api/article', payload)
+            .success(function(data, status, headers, config)
             {
-                console.log('Aritcle created successfully!');
+                if (!data.error)
+                {
+                    console.log(data);
+                    console.log('Article created successfully!');
+                    $location.path('/article/' + data.id);
+                }
+
+                else
+                {
+                   console.log('Something happened!');
+                }
+            })
+
+            .error(function(data, status, headers, config)
+            {
+                    /*handle non 200 statuses*/
             });
-
-            $location.path('/');
-        };
-
+        }
     });

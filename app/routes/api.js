@@ -29,10 +29,13 @@ module.exports = function(app, express)
 				});
 			}
 
+			console.log('The new ID is ' + article._id + '.');
+
 			res.json(
 			{
 				success: true,
-				message: 'Article created.'
+				message: 'Article created.',
+				id: article._id
 			});
 		});
 	});
