@@ -55,7 +55,7 @@ angular.module('mainCtrl', ['articleService', 'ngSanitize'])
 				// if a user successfully logs in, redirect to users page
 				if (data.success)
 				{
-					$location.path('/users');
+					$location.path('/');
 				}			
 				else
 				{
