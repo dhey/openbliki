@@ -37,6 +37,12 @@ angular.module('app.routes', ['ngRoute'])
 		})
 
 		// show all users
+		.when('/article/delete/:article_id', {
+			templateUrl: 'app/views/templates/articleDelete.html',
+			controller: 'ArticleDeleteController',
+			controllerAs: 'articleDeleteController'
+		})
+
 		.when('/users', {
 			templateUrl: 'app/views/templates/users/all.html',
             controller: 'userController',

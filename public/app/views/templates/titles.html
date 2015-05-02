@@ -4,6 +4,6 @@
     <li ng-repeat="title in titlesController.titles">
         <a href="/article/{{title._id}}">{{ title.title }}</a>
         <a ng-if="main.loggedIn">(edit)</a>
-        <a ng-if="main.loggedIn">(delete)</a>
+        <a ng-if="main.loggedIn" href="/article/delete/{{ title._id }}">(delete)</a>
     </li>
 </ul>

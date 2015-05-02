@@ -1,7 +1,7 @@
 angular.module('ArticleController', ['articleService', 'ngSanitize'])
 .controller('ArticleController',
 
-    function(ArticleFactory, $routeParams, $sce, $rootScope, $location)
+    function(ArticleFactory, $scope, $stateParams, $routeParams, $sce, $rootScope, $location)
     {
         "use strict";
         var vm = this;

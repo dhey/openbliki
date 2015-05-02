@@ -11,6 +11,7 @@ var app = angular.module('userApp', [
     'TitlesController',
     'titlesService',
     'ArticleController',
+    'ArticleDeleteController',
     'articleService',
     'ngSanitize'
 	])
