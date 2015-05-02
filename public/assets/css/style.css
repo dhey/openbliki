@@ -22,6 +22,11 @@
     color: white;
 }
 
+li
+{
+    font-size: 20px;    
+}
+
 header
 {
     background: -webkit-linear-gradient(black, gray);
