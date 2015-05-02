@@ -1,6 +1,6 @@
 /*global angular, $location, markdown  */
-angular.module('MainController', ['articleService', 'ngSanitize'])
-.controller('MainController', function(ArticleFactory, $sce, $rootScope, $location, AuthService) {
+angular.module('MainController', ['ArticleService', 'ngSanitize'])
+.controller('MainController', function(ArticleService, $sce, $rootScope, $location, AuthService) {
     "use strict";
 
 	var vm = this;
@@ -9,7 +9,7 @@ angular.module('MainController', ['articleService', 'ngSanitize'])
 	vm.loggedIn = AuthService.isLoggedIn();
 	vm.htmlContent = "Loading...";
 
-	ArticleFactory.all().success(function(data)
+	ArticleService.all().success(function(data)
 	{
 		var	markdown_content = '', outerLoop, articleArray, innerLoop;
 

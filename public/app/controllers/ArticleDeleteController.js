@@ -1,14 +1,14 @@
-angular.module('ArticleDeleteController', ['articleService'])
+angular.module('ArticleDeleteController', ['ArticleService'])
 .controller('ArticleDeleteController',
 
-    function(ArticleFactory, $scope, $routeParams, $sce, $rootScope, $location, $http)
+    function(ArticleService, $scope, $routeParams, $sce, $rootScope, $location, $http)
     {
         "use strict";
         var vm = this;
         vm.processing = true;
 
 
-        ArticleFactory.get($routeParams.article_id).success(function(data)
+        ArticleService.get($routeParams.article_id).success(function(data)
         {
             console.log("Getting article for deletion...");
             console.log(data);

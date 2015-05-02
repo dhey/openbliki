@@ -1,4 +1,4 @@
-angular.module('ArticleController', ['articleService', 'ngSanitize'])
+angular.module('ArticleController', ['ArticleService', 'ngSanitize'])
 .controller('ArticleController',
 
     function(ArticleFactory, $scope, $stateParams, $routeParams, $sce, $rootScope, $location)

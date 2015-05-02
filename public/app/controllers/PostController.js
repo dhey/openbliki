@@ -1,8 +1,8 @@
 /*global angular, alert, Article */
-angular.module('PostController', ['articleService'])
+angular.module('PostController', ['ArticleService'])
 .controller('PostController', 
 
-    function(ArticleFactory, $scope, $stateParams, posts, $location, $http)
+    function(ArticleService, $scope, $stateParams, posts, $location, $http)
     {
         "use strict";
 
@@ -12,7 +12,7 @@ angular.module('PostController', ['articleService'])
         vm.processing = true;
 
         // grab all the articles at page load
-        ArticleFactory.all().success(function(data) 
+        ArticleService.all().success(function(data) 
         {
             // when all the articles come back, remove the processing variable
             vm.processing = false;

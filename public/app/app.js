@@ -12,7 +12,7 @@ var app = angular.module('userApp', [
     'titlesService',
     'ArticleController',
     'ArticleDeleteController',
-    'articleService',
+    'ArticleService',
     'ngSanitize'
 	])
 
