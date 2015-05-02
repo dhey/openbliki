@@ -50,6 +50,14 @@ UserSchema.methods.comparePassword = function(password) {
     "use strict";
 	var user = this;
 
+	console.log('Checking if the password is defined...');
+
+	if (!password)
+	{
+		console.log('...The password is undefined!');
+		return false;
+	}
+
 	/*jslint node: true, stupid: true */
 	return bcrypt.compareSync(password, user.password);
 };
