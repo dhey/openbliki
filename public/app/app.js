@@ -9,7 +9,7 @@ var app = angular.module('userApp', [
     'ui.router',
     'PostController',
     'TitlesController',
-    'titlesService',
+    'TitlesService',
     'ArticleController',
     'ArticleDeleteController',
     'ArticleService',

@@ -1,5 +1,5 @@
-angular.module('titlesService', [])
-.factory('TitlesFactory', function($http)
+angular.module('TitlesService', [])
+.factory('TitlesService', function($http)
 {
     "use strict";
 
