@@ -1,6 +1,6 @@
 /*global angular, alert, Article */
-angular.module('PostsCtrl', ['articleService'])
-.controller('PostsCtrl', 
+angular.module('PostController', ['articleService'])
+.controller('PostController', 
 
     function(ArticleFactory, $scope, $stateParams, posts, $location, $http)
     {

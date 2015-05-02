@@ -20,7 +20,7 @@ angular.module('app.routes', ['ngRoute'])
 		
 		.when('/compose', {
 			templateUrl: 'app/views/templates/compose.html',
-			controller: 'PostsCtrl',
+			controller: 'PostController',
 			controllerAs: 'compose'
 		})
 
