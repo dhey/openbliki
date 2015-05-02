@@ -2,7 +2,7 @@
 var app = angular.module('userApp', [
 	'ngAnimate',
 	'app.routes',
-	'authService',
+	'AuthService',
 	'MainController',
 	'UserController',
 	'userService',

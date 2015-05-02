@@ -1,10 +1,10 @@
-angular.module('authService', [])
+angular.module('AuthService', [])
 
 // Auth factory to log in and get information.
 // Inject $http for communicating with the API.
 // Inject $q to return promise objects.
 // Inject AuthToken to manage tokens.
-.factory('Auth', function($http, $q, AuthToken) {
+.factory('AuthService', function($http, $q, AuthToken) {
 
 	// Create an auth factory object:
 	var authFactory = {};

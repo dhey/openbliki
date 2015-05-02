@@ -1,12 +1,12 @@
 /*global angular, $location, markdown  */
 angular.module('MainController', ['articleService', 'ngSanitize'])
-.controller('MainController', function(ArticleFactory, $sce, $rootScope, $location, Auth) {
+.controller('MainController', function(ArticleFactory, $sce, $rootScope, $location, AuthService) {
     "use strict";
 
 	var vm = this;
 
 	// get info if a person is logged in
-	vm.loggedIn = Auth.isLoggedIn();
+	vm.loggedIn = AuthService.isLoggedIn();
 	vm.htmlContent = "Loading...";
 
 	ArticleFactory.all().success(function(data)
@@ -31,10 +31,10 @@ angular.module('MainController', ['articleService', 'ngSanitize'])
 
 	// check to see if a user is logged in on every request
 	$rootScope.$on('$routeChangeStart', function() {
-		vm.loggedIn = Auth.isLoggedIn();	
+		vm.loggedIn = AuthService.isLoggedIn();	
 
 		// get user information on page load
-		Auth.getUser()
+		AuthService.getUser()
 			.then(function(data) {
 				vm.user = data.data;
 			});	
@@ -47,7 +47,7 @@ angular.module('MainController', ['articleService', 'ngSanitize'])
 		// clear the error
 		vm.error = '';
 
-		Auth.login(vm.loginData.username, vm.loginData.password)
+		AuthService.login(vm.loginData.username, vm.loginData.password)
 			.success(function(data) {
 				vm.processing = false;			
 
@@ -65,9 +65,8 @@ angular.module('MainController', ['articleService', 'ngSanitize'])
 
 	// function to handle logging out
 	vm.doLogout = function() {
-		Auth.logout();
+		AuthService.logout();
 		vm.user = '';
-		
 		$location.path('/login');
 	};
 
