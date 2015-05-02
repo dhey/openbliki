@@ -1,7 +1,6 @@
 /*global angular, $location, markdown  */
-angular.module('mainCtrl', ['articleService', 'ngSanitize'])
-
-.controller('mainController', function(ArticleFactory, $sce, $rootScope, $location, Auth) {
+angular.module('MainController', ['articleService', 'ngSanitize'])
+.controller('MainController', function(ArticleFactory, $sce, $rootScope, $location, Auth) {
     "use strict";
 
 	var vm = this;

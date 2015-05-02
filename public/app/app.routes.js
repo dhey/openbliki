@@ -14,7 +14,7 @@ angular.module('app.routes', ['ngRoute'])
 		// login page
 		.when('/login', {
 			templateUrl : 'app/views/templates/login.html',
-			controller  : 'mainController',
+			controller  : 'MainController',
 			controllerAs: 'login'
 		})
 		
