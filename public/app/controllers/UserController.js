@@ -1,7 +1,6 @@
 /*global angular, alert, Article */
-angular.module('userCtrl', ['userService'])
-
-.controller('userController', function(User) {
+angular.module('UserController', ['userService'])
+.controller('UserController', function(User) {
     "use strict";
 
 	var vm = this;

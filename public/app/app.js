@@ -4,7 +4,7 @@ var app = angular.module('userApp', [
 	'app.routes',
 	'authService',
 	'MainController',
-	'userCtrl',
+	'UserController',
 	'userService',
     'ui.router',
     'PostsCtrl',
