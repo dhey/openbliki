@@ -16,6 +16,7 @@
     "casperjs": "^1.1.0-beta3",
     "chai": "*",
     "check-pages": "^0.8.0",
+    "feed": "^0.2.6",
     "gulp": "^3.8.11",
     "gulp-bower": "0.0.10",
     "gulp-casperjs": "0.0.5",

@@ -2,6 +2,7 @@ var User = require('../models/user');
 var Article = require('../models/article');
 var jwt = require('jsonwebtoken');
 var superSecret = 'bourbon';
+var Feed = require('feed');
 
 module.exports = function(app, express)
 {
@@ -60,7 +61,7 @@ module.exports = function(app, express)
 
 	apiRouter.route('/article/:article_id').delete(function(req, res)
 	{
- 		var articleID = req.params.article_id;
+		var articleID = req.params.article_id;
 		console.log('Deleting article with ID ' + articleID + '...');
 
 		Article.remove(
@@ -79,7 +80,7 @@ module.exports = function(app, express)
 
 	apiRouter.route('/article/:article_id').get(function(req, res)
 	{
- 		var articleID = req.params.article_id;
+		var articleID = req.params.article_id;
 
 		Article.find(
 		{
@@ -113,55 +114,138 @@ module.exports = function(app, express)
 		});
 	});
 
-	apiRouter.post('/authenticate', function(req, res) 
+	apiRouter.get('/rss', function(req, res)
 	{
-		console.log("Trying to authenticate...");
-		console.log("username: " + req.body.username);
-		console.log("password: " + req.body.password);
+		console.log('A request for the RSS feed was received...');
+		var feed = new Feed(
+		{
+			title: 'donhey.io',
+			description: 'Personal blog',
+			link: 'http://donhey.io',
+			image: '',
+			copyright: 'Don Hey, 2015-',
+			author:
+			{
+				name: 'Don Hey',
+				email: 'donhey@gmail.com',
+				link: 'http://donhey.io'
+			}
+		});
 
-		User.findOne({
-			username: req.body.username
-		}).select('name username password').exec(function(err, user) {
+		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
+		{
+			if (err)
+			{
+				return res.send(err);
+			}
 
-			if (err || !user) {
+			for (var key in articles)
+			{
+				feed.addItem(
+				{
+					title: articles[key].title
+				});
+
+				var output = feed.render('rss-2.0');
+				res.send(output);
+			}
+		});
+		
+	});
+
+	apiRouter.get('/atom', function(req, res)
+	{
+		console.log('A request for the Atom feed was received...');
+		var feed = new Feed(
+		{
+			title: 'donhey.io',
+			description: 'Personal blog',
+			link: 'http://donhey.io',
+			image: '',
+			copyright: 'Don Hey, 2015-',
+			author:
+			{
+				name: 'Don Hey',
+				email: 'donhey@gmail.com',
+				link: 'http://donhey.io'
+			}
+		});
+
+		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
+		{
+			if (err)
+			{
+				return res.send(err);
+			}
+
+			for (var key in articles)
+			{
+				var timeStamp = articles[key]._id.toString();
+				var date = date = new Date( parseInt( timeStamp, 16 ) * 1000 );
+
+				feed.addItem(
+				{
+					title: articles[key].title,
+					link: 'http://donhey.io/article/' + articles[key]._id,
+					date: date 
+				});
+
+				var output = feed.render('atom-1.0');
+				res.send(output);
+			}
+		});
+		
+	});
+
+apiRouter.post('/authenticate', function(req, res) 
+{
+	console.log("Trying to authenticate...");
+	console.log("username: " + req.body.username);
+	console.log("password: " + req.body.password);
+
+	User.findOne({
+		username: req.body.username
+	}).select('name username password').exec(function(err, user) {
+
+		if (err || !user) {
+			res.json({
+				success: 'false',
+				message: 'Authentication failed: User not found.'
+			});
+		}
+
+		else
+		{
+			var validPassword = user.comparePassword(req.body.password),
+			token = jwt.sign(
+			{
+				name: user.name,
+				username: user.username	
+			},
+			superSecret,
+			{
+				expiresInMinutes: 1440
+			});
+
+			if (!validPassword) 
+			{
 				res.json({
-					success: 'false',
-					message: 'Authentication failed: User not found.'
+					success: false,
+					message: 'Authentication failed. Wrong password.'
 				});
 			}
 
 			else
 			{
-				var validPassword = user.comparePassword(req.body.password),
-				token = jwt.sign(
-				{
-					name: user.name,
-					username: user.username	
-				},
-				superSecret,
-				{
-					expiresInMinutes: 1440
+				res.json({
+					success: true,
+					message: 'Enjoy your token.',
+					token: token
 				});
-
-				if (!validPassword) 
-				{
-					res.json({
-						success: false,
-						message: 'Authentication failed. Wrong password.'
-					});
-				}
-
-				else
-				{
-					res.json({
-						success: true,
-						message: 'Enjoy your token.',
-						token: token
-					});
-				}
 			}
-		});
+		}
 	});
+});
 
 	// Middleware to use for all requests:
 	apiRouter.use(function(req, res, next) 
