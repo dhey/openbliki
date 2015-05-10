@@ -1,14 +1,14 @@
 angular.module('ArticleController', ['ArticleService', 'ngSanitize'])
 .controller('ArticleController',
 
-    function(ArticleFactory, $scope, $stateParams, $routeParams, $sce, $rootScope, $location)
+    function(ArticleService, $scope, $stateParams, $routeParams, $sce, $rootScope, $location)
     {
         "use strict";
         var vm = this;
         vm.processing = true;
 
 
-        ArticleFactory.get($routeParams.article_id).success(function(data)
+        ArticleService.get($routeParams.article_id).success(function(data)
         {
             var markdown_content = '', loop, articleArray;
             articleArray = data[0].markdown;
