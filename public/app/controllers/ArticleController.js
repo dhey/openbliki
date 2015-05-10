@@ -8,7 +8,7 @@ angular.module('ArticleController', ['ArticleService', 'ngSanitize'])
         vm.processing = true;
 
 
-        ArticleService.get($routeParams.article_id).success(function(data)
+        ArticleService  .get($routeParams.article_id).success(function(data)
         {
             var markdown_content = '', loop, articleArray;
             articleArray = data[0].markdown;
