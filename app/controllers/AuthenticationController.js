@@ -1,4 +1,6 @@
-var Article = require('../models/article');
+var User = require('../models/user');
+var jwt = require('jsonwebtoken');
+var superSecret = 'bourbon';
 
 module.exports.controller = function(apiRouter) 
 {
