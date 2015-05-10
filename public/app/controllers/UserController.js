@@ -80,10 +80,10 @@ angular.module('UserController', ['UserService'])
 	// get the user data for the user you want to edit
 	// $routeParams is the way we grab data from the URL
 	UserService.get($routeParams.user_id)
-		.success(function(data) {
-			vm.userData = data;
-
-			console.log('Got user data: ' + data);
+		.success(function(data)
+		{
+			vm.userData = data[0];
+			console.log('Got user data for ' + vm.userData.username + ".");
 
 		});
 

@@ -6,19 +6,20 @@ var jwt = require('jsonwebtoken');
 var path = require('path');
 var superSecret = 'bourbon';
 
-// Dynamically include the controllers for public routes
+// Dynamically include the controllers for public routes:
 fs.readdirSync('./app/controllers').forEach(function (file) 
 {
     "use strict";
 
 	if(file.substr(-3) === '.js') 
 	{
+		console.log('Loading ' + file);
 		var route = require('../controllers/' + file);
 		route.controller(apiRouter);
 	}
 });
 
-// Middleware to use for all requests:
+// Middleware to use for all authenticated route requests:
 apiRouter.use(function(req, res, next) 
 {
     "use strict";

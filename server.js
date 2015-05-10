@@ -29,28 +29,8 @@ app.use(function(req, res, next)
 // Log all requests to the console
 app.use(morgan('dev'));
 
-// Connect to the database:
-// mongoose.connect = ('mongodb://dhey:malvingi@ds055689.mongolab.com:55689/tryagain', function (err, res)
-// mongoose.connect = ('mongodb://dhey:malvingi@ds061158.mongolab.com:61158/openbliki', function (err, res)
-// mongoose.connect('mongodb://localhost:27017/openBliki', function (err, res)
-// {
-//     "use strict";
-
-//     if (err)
-//     {
-//         console.log('Error connecting to Mongodb: ' + err);
-//     }
-
-//     else
-//     {
-//         console.log('Connected to Mongodb.');
-//     }
-// });
-
 var dbURI = 'mongodb://localhost:27017/openBliki';
-
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
-
 var db = mongoose.connection;
 
 db.on('connecting', function() {
@@ -103,6 +83,7 @@ app.use('/api', apiRoutes);
 app.get('*', function (req, res)
 {
     "use strict";
+    console.log('Using the catch-all route...');
     res.header("Content-Type",  "text/html; charset=UTF-8");
     res.header("Content-Encoding", "compress");
     res.sendFile(path.join(__dirname + '/public/app/views/index.html'));

@@ -6,7 +6,6 @@ module.exports.controller = function(apiRouter)
     apiRouter.route('/article/:article_id').get(function(req, res)
     {
         console.log('ArticleRetrievalController was invoked.');
-
         var articleID = req.params.article_id;
 
         Article.find(

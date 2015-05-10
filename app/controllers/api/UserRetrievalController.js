@@ -5,11 +5,18 @@ module.exports.controller = function(apiRouter)
     "use strict";
 
     // Get the user with the provided id:
-    apiRouter.route('/users:user_id').get(function(req, res) 
+    apiRouter.route('/users/:user_id').get(function(req, res) 
     {
         console.log('UserRetrievalController was invoked.');
+        var userID = req.params.user_id;
 
-        User.findById(req.params.user_id, function(err, user) 
+        User.find(
+        {
+            _id: userID
+
+        }, 
+
+        function(err, user) 
         {
             if (err)
             {
