@@ -5,6 +5,8 @@ module.exports.controller = function(apiRouter)
     // Update the user with the provided id:
     apiRouter.put('/users', function(req, res) 
     {
+        console.log('UserUpdateController was invoked.');
+
         User.findById(req.params.user_id, function(err, user) 
         {
             if (err)

@@ -5,6 +5,8 @@ module.exports.controller = function(apiRouter)
     // Create a user (accessed at POST http://localhost:8080/users)
     apiRouter.post('/users', function(req, res) 
     {
+        console.log('UserCreationController was invoked.');
+
         // Create a new instance of the User model:
         var user = new User();      
         user.name = req.body.name;

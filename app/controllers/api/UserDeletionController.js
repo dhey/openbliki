@@ -5,6 +5,8 @@ module.exports.controller = function(apiRouter)
     // Get the user with the provided id:
     apiRouter.delete('/users:user_id', function(req, res) 
     {
+        console.log('UserDeletionController was invoked.');
+
         User.remove(
         {
             _id: req.params.user_id

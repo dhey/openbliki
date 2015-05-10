@@ -13,7 +13,7 @@ module.exports.controller = function(apiRouter)
                 return res.send(err);
             }
 
-            console.log(article);
+            // console.log(article);
 
             // Return the articles:
             res.json(article);

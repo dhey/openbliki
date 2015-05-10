@@ -82,6 +82,9 @@ angular.module('UserController', ['UserService'])
 	UserService.get($routeParams.user_id)
 		.success(function(data) {
 			vm.userData = data;
+
+			console.log('Got user data: ' + data);
+
 		});
 
 	// function to save the user

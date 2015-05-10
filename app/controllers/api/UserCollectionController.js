@@ -2,7 +2,6 @@ var User = require('../../models/user');
 
 module.exports.controller = function(apiRouter) 
 {
-    // Create a user (accessed at POST http://localhost:8080/users)
     apiRouter.get('/users', function(req, res) 
     {
         console.log("Retrieving all users...");

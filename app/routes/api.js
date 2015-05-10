@@ -18,12 +18,12 @@ apiRouter.use(function(req, res, next)
 {
 	console.log('Middleware is trying to authenticate...');
 
-	var token = req.body.token || req.param('token') 
+	var token = req.body.token || req.params.token 
 	|| req.headers['x-access-token'];
 
 	if (token)
 	{
-		console.log('The token was: ' + token);
+		// console.log('The token was: ' + token);
 
 		jwt.verify(token, superSecret, function(err, decoded) 
 		{
@@ -55,6 +55,9 @@ apiRouter.use(function(req, res, next)
 // Dynamically include the controllers for authenticated routes:
 fs.readdirSync('./app/controllers/api').forEach(function (file) {
 	if(file.substr(-3) == '.js') {
+
+		console.log('Loading ' + file);
+
 		route = require('../controllers/api/' + file);
 		route.controller(apiRouter);
 	}

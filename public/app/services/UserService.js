@@ -6,7 +6,9 @@ angular.module('UserService', [])
 
 	// Get a single user:
 	userFactory.get = function(id) {
-		return $http.get('/api/users/' + id);
+		var data = $http.get('/api/users/' + id);
+		console.log('The user service retrieved: ' + data.user_id);
+		return data;
 	};
 
 	// Get all users:
