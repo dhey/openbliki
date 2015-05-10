@@ -18,61 +18,6 @@ fs.readdirSync('./app/controllers').forEach(function (file) {
   }
 });
 
-apiRouter.get('/titles', function(req, res)
-{
-	console.log("Retrieving all titles...");
-
-	Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
-	{
-		if (err)
-		{
-			return res.send(err);
-		}
-
-			// Return the articles:
-			res.json(titles);
-		});
-});
-
-apiRouter.get('/rss', function(req, res)
-{
-	console.log('A request for the RSS feed was received...');
-	var feed = new Feed(
-	{
-		title: 'donhey.io',
-		description: 'Personal blog',
-		link: 'http://donhey.io',
-		image: '',
-		copyright: 'Don Hey, 2015-',
-		author:
-		{
-			name: 'Don Hey',
-			email: 'donhey@gmail.com',
-			link: 'http://donhey.io'
-		}
-	});
-
-	Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
-	{
-		if (err)
-		{
-			return res.send(err);
-		}
-
-		for (var key in articles)
-		{
-			feed.addItem(
-			{
-				title: articles[key].title
-			});
-
-			var output = feed.render('rss-2.0');
-			res.send(output);
-		}
-	});
-
-});
-
 apiRouter.get('/atom', function(req, res)
 {
 	console.log('A request for the Atom feed was received...');
