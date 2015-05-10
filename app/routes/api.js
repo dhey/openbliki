@@ -1,14 +1,11 @@
-var User = require('../models/user');
-var Article = require('../models/article');
-var express = require('express');
 var apiRouter = module.exports = express();
+var express = require('express');
 var fs = require('fs');
-var path = require('path');
 var jwt = require('jsonwebtoken');
+var path = require('path');
 var superSecret = 'bourbon';
 
-
-// dynamically include routes (Controller)
+// Dynamically include the controllers for public routes
 fs.readdirSync('./app/controllers').forEach(function (file) {
 	if(file.substr(-3) == '.js') {
 		route = require('../controllers/' + file);
@@ -55,91 +52,11 @@ apiRouter.use(function(req, res, next)
 	}
 });
 
-// On routes that end in /users
-apiRouter.route('/users')
+// Dynamically include the controllers for authenticated routes:
+fs.readdirSync('./app/controllers/api').forEach(function (file) {
+	if(file.substr(-3) == '.js') {
+		route = require('../controllers/api/' + file);
+		route.controller(apiRouter);
+	}
+});
 
-	// Routes that end in /users/:user_id
-	apiRouter.route('/users/:user_id')
-
-		// Get the user with the provided id:
-		.get(function(req, res) 
-		{
-			User.findById(req.params.user_id, function(err, user) 
-			{
-				if (err)
-				{
-					return res.send(err);	
-				} 
-
-				// Return the user:
-				res.json(user);
-			});
-		})
-
-		// Update the user with the provided id:
-		.put(function(req, res) 
-		{
-			User.findById(req.params.user_id, function(err, user) 
-			{
-
-				if (err)
-				{
-					res.send(err);
-				}
-
-				else if (user)
-				{
-					// Set the new user information if it exists in the request:
-					if (req.body.name)
-					{
-						user.name = req.body.name;	
-					} 
-					if (req.body.username) 
-					{
-						user.username = req.body.username;
-					}
-					if (req.body.password)
-					{
-						user.password = req.body.password;
-					}
-
-					// Save the user:
-					user.save(function(err) {
-						if (err)
-						{
-							if (err)
-							{
-								res.send(err);
-							}
-						}
-
-						// Return a message:
-						res.json({ message: 'User updated!' });
-					});
-				}
-
-				else
-				{
-					res.status(422);
-					res.json({ message: 'The user was not found.' });
-				}
-
-			});
-		})
-
-		// Delete the user with the provided id:
-		.delete(function(req, res) 
-		{
-			User.remove(
-			{
-				_id: req.params.user_id
-			}, function(err, user) 
-			{
-				if (err)
-				{
-					return res.send(err);
-				}
-
-				res.json({ message: 'Successfully deleted.' });
-			});
-		});

@@ -1,4 +1,4 @@
-var Article = require('../models/article');
+var Article = require('../../models/article');
 
 module.exports.controller = function(apiRouter) 
 {
