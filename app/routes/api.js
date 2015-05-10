@@ -58,24 +58,6 @@ apiRouter.use(function(req, res, next)
 // On routes that end in /users
 apiRouter.route('/users')
 
-		// Get all the users (accessed at GET http://localhost:8080/api/users)
-		.get(function(req, res) 
-		{
-
-			console.log("Retrieving all users...");
-
-			User.find(function(err, users) 
-			{
-				if (err)
-				{
-					return res.send(err);
-				}
-
-				// Return the users:
-				res.json(users);
-			});
-		});
-
 	// Routes that end in /users/:user_id
 	apiRouter.route('/users/:user_id')
 
