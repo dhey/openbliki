@@ -3,199 +3,190 @@ var Article = require('../models/article');
 var jwt = require('jsonwebtoken');
 var superSecret = 'bourbon';
 var Feed = require('feed');
+var express = require('express');
+var apiRouter = module.exports = express();
+var fs = require('fs');
+var path = require('path');
+// var ArticleController = require('../controllers/ArticleController');
 
-module.exports = function(app, express)
+
+// dynamically include routes (Controller)
+fs.readdirSync('./app/controllers').forEach(function (file) {
+  if(file.substr(-3) == '.js') {
+      route = require('../controllers/' + file);
+      route.controller(apiRouter);
+  }
+});
+
+
+apiRouter.post('/article', function(req, res)
 {
-	"use strict";
+	console.log('A request to create a new article was received.');
+	console.log(req.body);
+	var article = new Article();
+	article.markdown = req.body.markdown;
+	article.title = req.body.markdown[0];
 
-	// Get an instance of the Express router:
-	var apiRouter = express.Router();
-
-	apiRouter.post('/article', function(req, res)
+	article.save(function(err) 
 	{
-		console.log('A request to create a new article was received.');
-		console.log(req.body);
-		var article = new Article();
-		article.markdown = req.body.markdown;
-		article.title = req.body.markdown[0];
-
-		article.save(function(err) 
+		if (err) 
 		{
-			if (err) 
+			return res.json(
 			{
-				return res.json(
-				{
-					success: false, 
-					message: 'Article saving borked.'
-				});
-			}
-
-			console.log('The new ID is ' + article._id + '.');
-
-			res.json(
-			{
-				success: true,
-				message: 'Article created.',
-				id: article._id
+				success: false, 
+				message: 'Article saving borked.'
 			});
+		}
+
+		console.log('The new ID is ' + article._id + '.');
+
+		res.json(
+		{
+			success: true,
+			message: 'Article created.',
+			id: article._id
 		});
 	});
+});
 
-	apiRouter.get('/article', function(req, res)
+
+apiRouter.route('/article/:article_id').delete(function(req, res)
+{
+	var articleID = req.params.article_id;
+	console.log('Deleting article with ID ' + articleID + '...');
+
+	Article.remove(
 	{
-		console.log("Retrieving the latest article...");
-
-		Article.find({}).sort({_id: 'desc'}).limit(1).exec(function(err, article)
+		_id: articleID
+	}, function(err, user) 
+	{
+		if (err)
 		{
-			if (err)
-			{
-				return res.send(err);
-			}
+			return res.send(err);
+		}
 
-			console.log(article);
-
-			// Return the articles:
-			res.json(article);
-		});
+		res.json({ message: 'Successfully deleted.' });
 	});
+});
 
-	apiRouter.route('/article/:article_id').delete(function(req, res)
+apiRouter.route('/article/:article_id').get(function(req, res)
+{
+	var articleID = req.params.article_id;
+
+	Article.find(
 	{
-		var articleID = req.params.article_id;
-		console.log('Deleting article with ID ' + articleID + '...');
+		_id: articleID
+	},
 
-		Article.remove(
+	function(err, article) 
+	{
+		if (err)
 		{
-			_id: articleID
-		}, function(err, user) 
-		{
-			if (err)
-			{
-				return res.send(err);
-			}
+			return res.send(err);
+		}
 
-			res.json({ message: 'Successfully deleted.' });
-		});
+		res.json(article);
 	});
+});
 
-	apiRouter.route('/article/:article_id').get(function(req, res)
+apiRouter.get('/titles', function(req, res)
+{
+	console.log("Retrieving all titles...");
+
+	Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
 	{
-		var articleID = req.params.article_id;
-
-		Article.find(
+		if (err)
 		{
-			_id: articleID
-		},
-
-		function(err, article) 
-		{
-			if (err)
-			{
-				return res.send(err);
-			}
-
-			res.json(article);
-		});
-	});
-
-	apiRouter.get('/titles', function(req, res)
-	{
-		console.log("Retrieving all titles...");
-
-		Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
-		{
-			if (err)
-			{
-				return res.send(err);
-			}
+			return res.send(err);
+		}
 
 			// Return the articles:
 			res.json(titles);
 		});
-	});
+});
 
-	apiRouter.get('/rss', function(req, res)
+apiRouter.get('/rss', function(req, res)
+{
+	console.log('A request for the RSS feed was received...');
+	var feed = new Feed(
 	{
-		console.log('A request for the RSS feed was received...');
-		var feed = new Feed(
+		title: 'donhey.io',
+		description: 'Personal blog',
+		link: 'http://donhey.io',
+		image: '',
+		copyright: 'Don Hey, 2015-',
+		author:
 		{
-			title: 'donhey.io',
-			description: 'Personal blog',
-			link: 'http://donhey.io',
-			image: '',
-			copyright: 'Don Hey, 2015-',
-			author:
-			{
-				name: 'Don Hey',
-				email: 'donhey@gmail.com',
-				link: 'http://donhey.io'
-			}
-		});
-
-		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
-		{
-			if (err)
-			{
-				return res.send(err);
-			}
-
-			for (var key in articles)
-			{
-				feed.addItem(
-				{
-					title: articles[key].title
-				});
-
-				var output = feed.render('rss-2.0');
-				res.send(output);
-			}
-		});
-		
+			name: 'Don Hey',
+			email: 'donhey@gmail.com',
+			link: 'http://donhey.io'
+		}
 	});
 
-	apiRouter.get('/atom', function(req, res)
+	Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
 	{
-		console.log('A request for the Atom feed was received...');
-		var feed = new Feed(
+		if (err)
 		{
-			title: 'donhey.io',
-			description: 'Personal blog',
-			link: 'http://donhey.io',
-			image: '',
-			copyright: 'Don Hey, 2015-',
-			author:
-			{
-				name: 'Don Hey',
-				email: 'donhey@gmail.com',
-				link: 'http://donhey.io'
-			}
-		});
+			return res.send(err);
+		}
 
-		Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
+		for (var key in articles)
 		{
-			if (err)
+			feed.addItem(
 			{
-				return res.send(err);
-			}
+				title: articles[key].title
+			});
 
-			for (var key in articles)
-			{
-				var timeStamp = articles[key]._id.toString();
-				var date = date = new Date( parseInt( timeStamp, 16 ) * 1000 );
-
-				feed.addItem(
-				{
-					title: articles[key].title,
-					link: 'http://donhey.io/article/' + articles[key]._id,
-					date: date 
-				});
-
-				var output = feed.render('atom-1.0');
-				res.send(output);
-			}
-		});
-		
+			var output = feed.render('rss-2.0');
+			res.send(output);
+		}
 	});
+
+});
+
+apiRouter.get('/atom', function(req, res)
+{
+	console.log('A request for the Atom feed was received...');
+	var feed = new Feed(
+	{
+		title: 'donhey.io',
+		description: 'Personal blog',
+		link: 'http://donhey.io',
+		image: '',
+		copyright: 'Don Hey, 2015-',
+		author:
+		{
+			name: 'Don Hey',
+			email: 'donhey@gmail.com',
+			link: 'http://donhey.io'
+		}
+	});
+
+	Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
+	{
+		if (err)
+		{
+			return res.send(err);
+		}
+
+		for (var key in articles)
+		{
+			var timeStamp = articles[key]._id.toString();
+			var date = date = new Date( parseInt( timeStamp, 16 ) * 1000 );
+
+			feed.addItem(
+			{
+				title: articles[key].title,
+				link: 'http://donhey.io/article/' + articles[key]._id,
+				date: date 
+			});
+
+			var output = feed.render('atom-1.0');
+			res.send(output);
+		}
+	});
+
+});
 
 apiRouter.post('/authenticate', function(req, res) 
 {
@@ -247,48 +238,48 @@ apiRouter.post('/authenticate', function(req, res)
 	});
 });
 
-	// Middleware to use for all requests:
-	apiRouter.use(function(req, res, next) 
+// Middleware to use for all requests:
+apiRouter.use(function(req, res, next) 
+{
+	console.log('Middleware is trying to authenticate...');
+
+	var token = req.body.token || req.param('token') 
+	|| req.headers['x-access-token'];
+
+	if (token)
 	{
-		console.log('Middleware is trying to authenticate...');
-		
-		var token = req.body.token || req.param('token') 
-		|| req.headers['x-access-token'];
+		console.log('The token was: ' + token);
 
-		if (token)
+		jwt.verify(token, superSecret, function(err, decoded) 
 		{
-			console.log('The token was: ' + token);
-
-			jwt.verify(token, superSecret, function(err, decoded) 
+			if(err) 
 			{
-				if(err) 
+				return res.status(403).send(
 				{
-					return res.status(403).send(
-					{
-						success: false,
-						message: 'Failed to authenticate token.'
-					});
-				}
+					success: false,
+					message: 'Failed to authenticate token.'
+				});
+			}
 
-				req.decoded = decoded;
-				next();
-			});
-		}
+			req.decoded = decoded;
+			next();
+		});
+	}
 
-		else
+	else
+	{
+		console.log('No token was found. Authentication failed.');
+		return res.status(403).send(
 		{
-			console.log('No token was found. Authentication failed.');
-			return res.status(403).send(
-			{
-				success: false,
-				message: 'No token was provided.'
-			});
-		}
+			success: false,
+			message: 'No token was provided.'
+		});
+	}
 
-	});
-	
-	// On routes that end in /users
-	apiRouter.route('/users')
+});
+
+// On routes that end in /users
+apiRouter.route('/users')
 
 		// Create a user (accessed at POST http://localhost:8080/users)
 		.post(function(req, res) 
@@ -431,6 +422,3 @@ apiRouter.post('/authenticate', function(req, res)
 				res.json({ message: 'Successfully deleted.' });
 			});
 		});
-
-		return apiRouter;
-	};

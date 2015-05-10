@@ -88,7 +88,7 @@ app.use(express.static(__dirname + '/public'));
 var apiRouter = express.Router();
 
 // API routes: This pulls in routes from app/routes/api.js:
-var apiRoutes = require('./app/routes/api')(app, express);
+var apiRoutes = require('./app/routes/api');
 app.use('/api', apiRoutes);
 
 // Main Catchall Route
