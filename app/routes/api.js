@@ -18,57 +18,6 @@ fs.readdirSync('./app/controllers').forEach(function (file) {
   }
 });
 
-
-apiRouter.post('/article', function(req, res)
-{
-	console.log('A request to create a new article was received.');
-	console.log(req.body);
-	var article = new Article();
-	article.markdown = req.body.markdown;
-	article.title = req.body.markdown[0];
-
-	article.save(function(err) 
-	{
-		if (err) 
-		{
-			return res.json(
-			{
-				success: false, 
-				message: 'Article saving borked.'
-			});
-		}
-
-		console.log('The new ID is ' + article._id + '.');
-
-		res.json(
-		{
-			success: true,
-			message: 'Article created.',
-			id: article._id
-		});
-	});
-});
-
-
-apiRouter.route('/article/:article_id').delete(function(req, res)
-{
-	var articleID = req.params.article_id;
-	console.log('Deleting article with ID ' + articleID + '...');
-
-	Article.remove(
-	{
-		_id: articleID
-	}, function(err, user) 
-	{
-		if (err)
-		{
-			return res.send(err);
-		}
-
-		res.json({ message: 'Successfully deleted.' });
-	});
-});
-
 apiRouter.route('/article/:article_id').get(function(req, res)
 {
 	var articleID = req.params.article_id;
