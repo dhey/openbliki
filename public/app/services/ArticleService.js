@@ -23,11 +23,11 @@ angular.module('ArticleService', [])
         return $http.post('/api/article/', userData);
     };
 
-    articleFactory.delete = function() {
+    articleFactory.delete = function(id) {
         console.log('Deleting article ' + id);
         var returnValue = $http.delete('/api/article/id');
-        // console.log('articleService got ' + returnValue + ' for ID ' + id);
-        // return returnValue;
+        console.log('articleService got ' + returnValue + ' for ID ' + id);
+        return returnValue;
     };
 
     return articleFactory;

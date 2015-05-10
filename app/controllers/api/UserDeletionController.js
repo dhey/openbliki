@@ -2,6 +2,8 @@ var User = require('../../models/user');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
+
     // Get the user with the provided id:
     apiRouter.delete('/users:user_id', function(req, res) 
     {

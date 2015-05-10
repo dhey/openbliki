@@ -74,7 +74,7 @@ angular.module('PostController', ['ArticleService'])
         $scope.createArticle = function()
         {
             var article = new Article(),
-                payload;
+            payload;
             article.markdown = $scope.editedArticle.split('\n');
             payload = angular.toJson(article, 2);
             
@@ -91,12 +91,13 @@ angular.module('PostController', ['ArticleService'])
                 else
                 {
                    console.log('Something happened!');
-                }
-            })
+               }
+           })
 
             .error(function(data, status, headers, config)
             {
-                    /*handle non 200 statuses*/
+                /*handle non 200 statuses*/
+                console.log('An error was handled.');
             });
-        }
+        };
     });

@@ -17,9 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Configure the app to handle CORS requests:
-app.use(function(req, res, next) {
+app.use(function(req, res, next) 
+{
     "use strict";
-
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Authorization');
@@ -47,34 +47,40 @@ app.use(morgan('dev'));
 //     }
 // });
 
-dbURI = 'mongodb://localhost:27017/openBliki';
+var dbURI = 'mongodb://localhost:27017/openBliki';
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'));
 
 var db = mongoose.connection;
 
 db.on('connecting', function() {
+    "use strict";
     console.log('connecting to MongoDB...');
 });
 
 db.on('error', function(error) {
+    "use strict";
     console.error('Error in MongoDb connection: ' + error);
     mongoose.disconnect();
 });
 
 db.on('connected', function() {
+    "use strict";
     console.log('MongoDB connected!');
 });
 
 db.once('open', function() {
+    "use strict";
     console.log('MongoDB connection opened!');
 });
 
 db.on('reconnected', function () {
+    "use strict";
     console.log('MongoDB reconnected!');
 });
 
 db.on('disconnected', function() {
+    "use strict";
     console.log('MongoDB disconnected!');
     mongoose.connect(dbURI, {server:{auto_reconnect:true}});
 });

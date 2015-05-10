@@ -1,3 +1,4 @@
+/*global angular, $location, markdown  */
 angular.module('ArticleController', ['ArticleService', 'ngSanitize'])
 .controller('ArticleController',
 

@@ -1,3 +1,4 @@
+/*global angular, alert, Article */
 angular.module('TitlesController', ['TitlesService'])
 .controller('TitlesController',
 

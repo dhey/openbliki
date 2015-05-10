@@ -48,12 +48,12 @@ gulp.task('jsonlintBowerJSON', function(){
     .on('error', handleError);
 });
 
-// Task jslintGulp will check this file, gulpfile.js, for lint:
+// Task jslint will check this file, gulpfile.js, for lint:
 gulp.task('jslint', function()
 {
     "use strict";
-    return gulp.src(['gulpfile.js', 'server.js', './app/**/*.js', 
-        './public/app/**/*.js'])
+   return gulp.src(['gulpfile.js', 'server.js', './app/**/*.js', 
+       './public/app/**/*.js'])
 
         // Pass your directives as an object:
         .pipe(jslint(

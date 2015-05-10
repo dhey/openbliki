@@ -3,6 +3,7 @@ var Feed = require('feed');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.get('/rss', function(req, res)
     {
         console.log('A request for the RSS feed was received...');
@@ -23,21 +24,26 @@ module.exports.controller = function(apiRouter)
 
         Article.find({}).sort({_id: 'desc'}).exec(function(err, articles)
         {
+            var key, output;
+
             if (err)
             {
                 return res.send(err);
             }
 
-            for (var key in articles)
+            for (key in articles)
             {
-                feed.addItem(
+                if (articles.hasOwnProperty(key))
                 {
-                    title: articles[key].title
-                });
-
-                var output = feed.render('rss-2.0');
-                res.send(output);
+                    feed.addItem(
+                    {
+                        title: articles[key].title
+                    });
+                }
             }
+
+            output = feed.render('rss-2.0');
+            res.send(output);
         });
     });
 };

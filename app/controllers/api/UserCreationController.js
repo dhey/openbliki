@@ -2,6 +2,8 @@ var User = require('../../models/user');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
+
     // Create a user (accessed at POST http://localhost:8080/users)
     apiRouter.post('/users', function(req, res) 
     {

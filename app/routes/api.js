@@ -1,14 +1,19 @@
 var express = require('express');
-var apiRouter = module.exports = express();
+module.exports = express();
+var apiRouter = module.exports;
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var path = require('path');
 var superSecret = 'bourbon';
 
 // Dynamically include the controllers for public routes
-fs.readdirSync('./app/controllers').forEach(function (file) {
-	if(file.substr(-3) == '.js') {
-		route = require('../controllers/' + file);
+fs.readdirSync('./app/controllers').forEach(function (file) 
+{
+    "use strict";
+
+	if(file.substr(-3) === '.js') 
+	{
+		var route = require('../controllers/' + file);
 		route.controller(apiRouter);
 	}
 });
@@ -16,6 +21,7 @@ fs.readdirSync('./app/controllers').forEach(function (file) {
 // Middleware to use for all requests:
 apiRouter.use(function(req, res, next) 
 {
+    "use strict";
 	console.log('Middleware is trying to authenticate...');
 
 	var token = req.body.token || req.params.token 
@@ -53,13 +59,14 @@ apiRouter.use(function(req, res, next)
 });
 
 // Dynamically include the controllers for authenticated routes:
-fs.readdirSync('./app/controllers/api').forEach(function (file) {
-	if(file.substr(-3) == '.js') {
+fs.readdirSync('./app/controllers/api').forEach(function (file) 
+{
+    "use strict";
 
+	if(file.substr(-3) === '.js') 
+	{
 		console.log('Loading ' + file);
-
-		route = require('../controllers/api/' + file);
+		var route = require('../controllers/api/' + file);
 		route.controller(apiRouter);
 	}
 });
-

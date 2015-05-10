@@ -2,6 +2,7 @@ var Article = require('../../models/article');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.post('/article', function(req, res)
     {
         console.log('A request to create a new article was received.');

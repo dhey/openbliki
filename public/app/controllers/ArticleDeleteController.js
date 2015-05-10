@@ -1,3 +1,4 @@
+/*global angular, $location, markdown  */
 angular.module('ArticleDeleteController', ['ArticleService'])
 .controller('ArticleDeleteController',
 

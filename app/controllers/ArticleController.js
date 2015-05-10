@@ -2,6 +2,7 @@ var Article = require('../models/article');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.get('/article', function(req, res)
     {
         console.log("Retrieving the latest article...");

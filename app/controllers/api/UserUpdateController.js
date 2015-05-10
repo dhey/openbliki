@@ -2,6 +2,8 @@ var User = require('../../models/user');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
+
     // Update the user with the provided id:
     apiRouter.put('/users', function(req, res) 
     {

@@ -2,16 +2,17 @@ var Article = require('../models/article');
 
 module.exports.controller = function(apiRouter) 
 {
- apiRouter.get('/titles', function(req, res)
- {
-    console.log("Retrieving all titles...");
-
-    Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
+    "use strict";
+    apiRouter.get('/titles', function(req, res)
     {
-        if (err)
+        console.log("Retrieving all titles...");
+
+        Article.find({}, 'title').sort({_id: 'desc'}).exec(function(err, titles)
         {
-            return res.send(err);
-        }
+            if (err)
+            {
+                return res.send(err);
+            }
 
             // Return the articles:
             res.json(titles);

@@ -4,6 +4,7 @@ var superSecret = 'bourbon';
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.post('/authenticate', function(req, res) 
     {
         console.log("Trying to authenticate...");

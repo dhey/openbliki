@@ -2,6 +2,7 @@ var User = require('../../models/user');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.get('/users', function(req, res) 
     {
         console.log("Retrieving all users...");

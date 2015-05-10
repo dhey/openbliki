@@ -2,6 +2,7 @@ var Article = require('../../models/article');
 
 module.exports.controller = function(apiRouter) 
 {
+    "use strict";
     apiRouter.route('/article/:article_id').delete(function(req, res)
     {
         var articleID = req.params.article_id;
