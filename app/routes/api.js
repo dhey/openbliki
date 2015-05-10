@@ -11,61 +11,10 @@ var path = require('path');
 
 // dynamically include routes (Controller)
 fs.readdirSync('./app/controllers').forEach(function (file) {
-  if(file.substr(-3) == '.js') {
-      route = require('../controllers/' + file);
-      route.controller(apiRouter);
-  }
-});
-
-
-apiRouter.post('/authenticate', function(req, res) 
-{
-	console.log("Trying to authenticate...");
-	console.log("username: " + req.body.username);
-	console.log("password: " + req.body.password);
-
-	User.findOne({
-		username: req.body.username
-	}).select('name username password').exec(function(err, user) {
-
-		if (err || !user) {
-			res.json({
-				success: 'false',
-				message: 'Authentication failed: User not found.'
-			});
-		}
-
-		else
-		{
-			var validPassword = user.comparePassword(req.body.password),
-			token = jwt.sign(
-			{
-				name: user.name,
-				username: user.username	
-			},
-			superSecret,
-			{
-				expiresInMinutes: 1440
-			});
-
-			if (!validPassword) 
-			{
-				res.json({
-					success: false,
-					message: 'Authentication failed. Wrong password.'
-				});
-			}
-
-			else
-			{
-				res.json({
-					success: true,
-					message: 'Enjoy your token.',
-					token: token
-				});
-			}
-		}
-	});
+	if(file.substr(-3) == '.js') {
+		route = require('../controllers/' + file);
+		route.controller(apiRouter);
+	}
 });
 
 // Middleware to use for all requests:
@@ -104,8 +53,7 @@ apiRouter.use(function(req, res, next)
 			success: false,
 			message: 'No token was provided.'
 		});
-	}
-
+	}a
 });
 
 // On routes that end in /users
