@@ -1,5 +1,5 @@
-var apiRouter = module.exports = express();
 var express = require('express');
+var apiRouter = module.exports = express();
 var fs = require('fs');
 var jwt = require('jsonwebtoken');
 var path = require('path');
