@@ -44,6 +44,8 @@ angular.module('MainController', ['ArticleService', 'ngSanitize'])
 	vm.doLogin = function() {
 		vm.processing = true;
 
+		console.log('Trying to log in to the server...');
+
 		// clear the error
 		vm.error = '';
 
@@ -55,6 +57,7 @@ angular.module('MainController', ['ArticleService', 'ngSanitize'])
 				if (data.success)
 				{
 					$location.path('/');
+					console.log('User logged in!');
 				}			
 				else
 				{

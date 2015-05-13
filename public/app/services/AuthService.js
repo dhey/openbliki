@@ -36,9 +36,11 @@ angular.module('AuthService', [])
 	authFactory.isLoggedIn = function() {
 		if (AuthToken.getToken())
 		{
+			console.log('The user is logged in.');
 			return true;
 		}
 
+		console.log('The user is not logged in.');
 		return false;
 	};
 
@@ -73,10 +75,15 @@ angular.module('AuthService', [])
 	authTokenFactory.setToken = function(token) {
 		if (token)
 		{
+			console.log('Storing the token...')
 			$window.localStorage.setItem('token', token);
 		}
 
-		$window.localStorage.removeItem('token');
+		else
+		{
+			console.log('Clearing the token...')
+			$window.localStorage.removeItem('token');
+		}
 	};
 
 	return authTokenFactory;

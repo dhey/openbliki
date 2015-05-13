@@ -45,6 +45,8 @@ module.exports.controller = function(apiRouter)
 
                 else
                 {
+                    console.log('Returning token: ' + token);
+
                     res.json({
                         success: true,
                         message: 'Enjoy your token.',
