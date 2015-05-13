@@ -5,6 +5,8 @@
     text-align: center;
 }
 
+
+
 .navbar-custom
 {
     color: white;    
@@ -22,9 +24,9 @@
     color: white;
 }
 
-li
+.main
 {
-    font-size: 20px;    
+    padding-top: 50px;
 }
 
 header
@@ -33,6 +35,11 @@ header
     background: -o-linear-gradient(black, gray);
     background: -moz-linear-gradient(black, gray);
     background: linear-gradient(black, gray);
+}
+
+li
+{
+    font-size: 20px;    
 }
 
 p
