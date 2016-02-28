@@ -9,7 +9,7 @@ var bodyParser = require('body-parser');
 var morgan     = require('morgan');
 var mongoose   = require('mongoose');
 var User       = require('./app/models/user');
-var port       = process.env.PORT || 80;
+// var port       = process.env.PORT || 80;
 var path = require('path');
 
 // Use body parser so we can grab information from POST requests:
